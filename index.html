@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>StockControl</title>
-<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -219,18 +219,17 @@ function renderPage(page){
 
 // CONNECT
 document.getElementById('btn-connect').addEventListener('click',function(){
-  var url=(document.getElementById('cfg-url').value||'').trim().replace(/\/$/,'');
+  var url=(document.getElementById('cfg-url').value||'').trim().replace(//$/,'');
   var key=(document.getElementById('cfg-key').value||'').trim();
   var err=document.getElementById('cfg-err');
   err.classList.add('hidden');
-  if(!url.startsWith('https://')||!url.includes('supabase')){
-    err.textContent='URL inválida. Use: https://xxxxx.supabase.co';
-    err.classList.remove('hidden');return;
-  }
-  if(!key.startsWith('eyJ')||key.length<50){
-    err.textContent='Chave inválida. Copie a chave anon completa do Supabase.';
-    err.classList.remove('hidden');return;
-  }
+  if(typeof supabase==='undefined'){err.textContent='Erro: Supabase nao carregou. Recarregue a pagina.';err.classList.remove('hidden');return;}
+  if(!url){err.textContent='Digite a URL do projeto.';err.classList.remove('hidden');return;}
+  if(!url.startsWith('https://')){ err.textContent='URL deve comecar com https://';err.classList.remove('hidden');return;}
+  if(!url.includes('supabase')){err.textContent='URL invalida. Use: https://xxxxx.supabase.co';err.classList.remove('hidden');return;}
+  if(!key){err.textContent='Digite a chave anon.';err.classList.remove('hidden');return;}
+  if(!key.startsWith('eyJ')){err.textContent='Chave invalida - deve comecar com eyJ';err.classList.remove('hidden');return;}
+  if(key.length<100){err.textContent='Chave muito curta ('+key.length+' chars). A chave anon tem ~200 caracteres.';err.classList.remove('hidden');return;}
   localStorage.setItem('sc_url',url);localStorage.setItem('sc_key',key);
   doStart(url,key);
 });
@@ -534,4 +533,3 @@ function renderSettings(){
 </script>
 </body>
 </html>
-
