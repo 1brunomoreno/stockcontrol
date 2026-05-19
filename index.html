@@ -219,7 +219,7 @@ function renderPage(page){
 
 // CONNECT
 document.getElementById('btn-connect').addEventListener('click',function(){
-  var url=(document.getElementById('cfg-url').value||'').trim().replace(//$/,'');
+  var url=(document.getElementById('cfg-url').value||'').trim().replace(/\/$/,'');
   var key=(document.getElementById('cfg-key').value||'').trim();
   var err=document.getElementById('cfg-err');
   err.classList.add('hidden');
