@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>StockControl</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<script>var supabase={createClient:function(url,key){var base=url+"/rest/v1";var H={"apikey":key,"Authorization":"Bearer "+key,"Content-Type":"application/json","Prefer":"return=representation"};function mkQ(table){var filters=[],_order=null,_limit=null,_select="*";var o={select:function(s){_select=s;return o;},order:function(c,opts){_order=c+(opts&&opts.ascending===false?".desc":".asc");return o;},limit:function(n){_limit=n;return o;},eq:function(c,v){filters.push(c+"=eq."+encodeURIComponent(v));return o;},gte:function(c,v){filters.push(c+"=gte."+encodeURIComponent(v));return o;},lte:function(c,v){filters.push(c+"=lte."+encodeURIComponent(v));return o;},_u:function(){var u=base+"/"+table+"?select="+encodeURIComponent(_select);filters.forEach(function(f){u+="&"+f;});if(_order)u+="&order="+_order;if(_limit)u+="&limit="+_limit;return u;},then:function(res){return fetch(o._u(),{headers:H}).then(function(r){return r.json();}).then(function(d){res({data:Array.isArray(d)?d:[],error:null});}).catch(function(e){res({data:[],error:e});});},insert:function(body){return fetch(base+"/"+table,{method:"POST",headers:H,body:JSON.stringify(body)}).then(function(r){return{data:null,error:null};}).catch(function(e){return{data:null,error:e};});},update:function(body){return{eq:function(c,v){return fetch(base+"/"+table+"?"+c+"=eq."+encodeURIComponent(v),{method:"PATCH",headers:H,body:JSON.stringify(body)}).then(function(){return{data:null,error:null};}).catch(function(e){return{data:null,error:e};});}};},delete:function(){return{eq:function(c,v){return fetch(base+"/"+table+"?"+c+"=eq."+encodeURIComponent(v),{method:"DELETE",headers:H}).then(function(){return{data:null,error:null};}).catch(function(e){return{data:null,error:e};});}};},};return o;}return{from:function(t){return mkQ(t);}};}};</script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -223,7 +223,6 @@ document.getElementById('btn-connect').addEventListener('click',function(){
   var key=(document.getElementById('cfg-key').value||'').trim();
   var err=document.getElementById('cfg-err');
   err.classList.add('hidden');
-  if(typeof supabase==='undefined'){err.textContent='Erro: Supabase nao carregou. Recarregue a pagina.';err.classList.remove('hidden');return;}
   if(!url){err.textContent='Digite a URL do projeto.';err.classList.remove('hidden');return;}
   if(!url.startsWith('https://')){ err.textContent='URL deve comecar com https://';err.classList.remove('hidden');return;}
   if(!url.includes('supabase')){err.textContent='URL invalida. Use: https://xxxxx.supabase.co';err.classList.remove('hidden');return;}
